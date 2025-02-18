@@ -1,22 +1,24 @@
-﻿namespace CalculatorPackage
+﻿using System.Numerics;
+
+namespace CalculatorPackage
 {
-    public class Calculator
+    public class Calculator<T> where T : INumber<T>
     {
-        int Add( int a, int b)
+        public T Add(T a, T b)
         {
             return a + b;
         }
-        int Subtract( int a, int b)
+        public T Subtract(T a, T b)
         {
             return a - b;
         }
-        int Multiply( int a, int b)
+        public T Multiply(T a, T b)
         {
             return a * b;
         }
-        int Divide( int a, int b)
+        public T Divide(T a, T b)
         {
-            if (b == 0)
+            if (b == T.Zero)
             {
                 throw new DivideByZeroException("Division by zero is not defined");
             }
