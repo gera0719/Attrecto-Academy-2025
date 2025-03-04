@@ -33,6 +33,12 @@ namespace Academy2025.Controllers
 
             return user == null ? null : user;
         }
+        [HttpGet("over18")]
+        public async Task<IEnumerable<User>> GetUsersOverEighteenAsync()
+        {
+            var users = await _repository.GetAllOverEighteenAsync();
+            return users;
+        }
 
         // POST api/<UsersController>
         [HttpPost]

@@ -9,5 +9,6 @@ namespace Academy2025.Repositories
         Task<List<User>> GetAllAsync();
         Task<User?> GetByIdAsync(int id);
         Task<User?> UpdateAsync(int id, User data);
+        Task<List<User>> GetAllOverEighteenAsync();
     }
 }

@@ -62,5 +62,9 @@ namespace Academy2025.Repositories
             }
             return false;
         }
+        public Task<List<User>> GetAllOverEighteenAsync()
+        {
+            return (from user in _context.Users where user.age >= 18 select user).ToListAsync();
+        }
     }
 }
