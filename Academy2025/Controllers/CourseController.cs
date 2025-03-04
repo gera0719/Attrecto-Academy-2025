@@ -1,5 +1,6 @@
 ﻿using Academy2025.Data;
 using Microsoft.AspNetCore.Mvc;
+using Academy2025.Repositories;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,73 +11,58 @@ namespace Academy2025.Controllers
     [ApiController]
     public class CourseController : ControllerBase
     {
-        public static List<Course>? Courses = new List<Course>();
+        //public static List<Course>? Courses = new List<Course>();
+        private readonly ICourseRepository _repository;
         // GET: api/<CourseController>
-        [HttpGet]
-        public IEnumerable<Course> Get()
+        public CourseController( ICourseRepository repository)
         {
-            return Courses;
+            _repository = repository;
+        }
+        [HttpGet]
+        public async Task<IEnumerable<Course>> GetAsync()
+        {
+            return await _repository.GetAllAsync();
         }
 
         // GET api/<CourseController>/5
         [HttpGet("{id}")]
-        public ActionResult<Course> Get(int id)
+        public async Task<ActionResult<Course>> GetAsync(int id)
         {
-            foreach (var course in Courses)
-            {
-                if (course.Id == id)
-                {
-                    return Ok(course);
-                }
-            }
-            return NotFound();
+            var course = await _repository.GetByIdAsync(id);
+
+            return course == null ? NotFound() : course;
         }
 
         // POST api/<CourseController>
         [HttpPost]
-        public ActionResult Post([FromBody] Course course)
+        public async Task<ActionResult> PostAsync([FromBody] Course course)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Courses.Add(course);
+            await _repository.CreateAsync(course);
 
-            return Ok();
+            return NoContent();
         }
 
         // PUT api/<CourseController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Course course)
+        public async Task<ActionResult> PutAsync(int id, [FromBody] Course data)
         {
-            foreach (var c in Courses)
-            {
-                if (c.Id == id)
-                {
-                    course.Name = c.Name;
-                    course.Description = c.Description;
+            var course = await _repository.UpdateAsync(id, data);
 
-                    return NoContent();
-                }
-            }
-            return BadRequest(ModelState);
+            return course == null ? NotFound() : NoContent();
         }
 
         // DELETE api/<CourseController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            foreach (var course in Courses)
-            {
-                if (course.Id == id)
-                {
-                    Courses.Remove(course);
+            var result = await _repository.DeleteAsync(id);
 
-                    return NoContent();
-                }
-            }
-            return NotFound();
+            return result ? NoContent() : NotFound();
         }
     }
 }
