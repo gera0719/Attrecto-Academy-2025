@@ -17,6 +17,7 @@ namespace Academy2025.Repositories
 
         public Task<Course?> GetByIdAsync(int id)
         {
+            
             return _context.Courses.FirstOrDefaultAsync(course => course.Id == id);
         }
         public async Task CreateAsync(Course data)
@@ -28,7 +29,7 @@ namespace Academy2025.Repositories
         {
             var course = await _context.Courses.FirstOrDefaultAsync(course => course.Id == id);
 
-            if (course.Id == id)
+            if (course != null && course.Id == id)
             {
                 course.Title = data.Title;
                 course.Description = data.Description;
@@ -39,12 +40,11 @@ namespace Academy2025.Repositories
                 return course;
             }
             return null;
-
         }
         public async Task<bool> DeleteAsync(int id)
         {
             var course = await _context.Courses.FirstOrDefaultAsync(course => course.Id == id);
-            if (course.Id == id)
+            if (course != null && course.Id == id)
             {
                 _context.Courses.Remove(course);
 
