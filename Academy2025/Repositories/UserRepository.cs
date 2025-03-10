@@ -36,10 +36,11 @@ namespace Academy2025.Repositories
 
             if (user.Id == id)
             {
-                user.FirstName = data.FirstName;
-                user.LastName = data.LastName;
+                user.Name = data.Name;
                 user.Email = data.Email;
                 user.Password = data.Password;
+                user.Age = data.Age;
+                user.Courses = data.Courses;
 
                 await _context.SaveChangesAsync();
 
@@ -65,7 +66,7 @@ namespace Academy2025.Repositories
         public Task<List<User>> GetAllOverEighteenAsync()
         {
             //return (from user in _context.Users where user.age >= 18 select user).ToListAsync();
-            return _context.Users.Where(user => user.age >= 18).ToListAsync();
+            return _context.Users.Where(user => user.Age >= 18).ToListAsync();
         }
     }
 }

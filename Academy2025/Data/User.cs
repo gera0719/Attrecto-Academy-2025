@@ -12,17 +12,14 @@ namespace Academy2025.Data
         public string? Email { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string? FirstName { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string? LastName { get; set; }
+        [StringLength(75)]
+        public string? Name { get; set; }
         [Required]
         public string? Password { get; set; }
 
         [Required]
-        public int age {  get; set; }
+        public int Age {  get; set; }
 
-        public ICollection<Course> courses { get; set; } = [];
+        public ICollection<Course> Courses { get; set; } = [];
     }
 }
