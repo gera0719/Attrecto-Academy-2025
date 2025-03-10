@@ -11,6 +11,9 @@ namespace Academy2025.Data
         [StringLength(50)]
         public string? Title { get; set; }
         [Required]
+        [StringLength(50)]
+        public string? Author { get; set; }
+        [Required]
         [StringLength(300)]
         public string? Description { get; set; }
         [Required]

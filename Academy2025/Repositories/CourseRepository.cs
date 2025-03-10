@@ -34,6 +34,8 @@ namespace Academy2025.Repositories
                 course.Title = data.Title;
                 course.Description = data.Description;
                 course.Url = data.Url;
+                course.Author = data.Author;
+                course.Users = data.Users;
 
                 await _context.SaveChangesAsync();
 
