@@ -41,6 +41,7 @@ namespace Academy2025.Repositories
                 user.Password = data.Password;
                 user.Age = data.Age;
                 user.Courses = data.Courses;
+                user.Role = data.Role;
 
                 await _context.SaveChangesAsync();
 

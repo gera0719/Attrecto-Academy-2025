@@ -19,6 +19,8 @@ namespace Academy2025.Data
 
         [Required]
         public int Age {  get; set; }
+        [Required]
+        public string? Role { get; set; }
 
         public ICollection<Course> Courses { get; set; } = [];
     }
