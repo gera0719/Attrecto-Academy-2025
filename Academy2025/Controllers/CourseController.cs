@@ -1,6 +1,7 @@
-﻿using Academy2025.Data;
+﻿using Academy2025.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Academy2025.Repositories;
+using Academy2025.Services;
+using Microsoft.AspNetCore.Authorization;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,55 +13,60 @@ namespace Academy2025.Controllers
     public class CourseController : ControllerBase
     {
         //public static List<Course>? Courses = new List<Course>();
-        private readonly ICourseRepository _repository;
+        private readonly ICourseService _courseService;
         // GET: api/<CourseController>
-        public CourseController( ICourseRepository repository)
+        public CourseController( ICourseService courseService )
         {
-            _repository = repository;
+            _courseService = courseService;
         }
+        [Authorize]
         [HttpGet]
-        public async Task<IEnumerable<Course>> GetAsync()
+        public async Task<IEnumerable<CourseDTO>> GetAsync()
         {
-            return await _repository.GetAllAsync();
+            return await _courseService.GetAllAsync();
         }
 
         // GET api/<CourseController>/5
+        [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Course>> GetAsync(int id)
+        public async Task<ActionResult<CourseDTO>> GetAsync(int id)
         {
-            var course = await _repository.GetByIdAsync(id);
+            var course = await _courseService.GetByIdAsync(id);
 
             return course == null ? NotFound() : course;
         }
 
         // POST api/<CourseController>
+        [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult> PostAsync([FromBody] Course course)
+        public async Task<ActionResult> PostAsync([FromBody] CourseDTO course)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _repository.CreateAsync(course);
+            await _courseService.CreateAsync(course);
 
             return NoContent();
         }
 
         // PUT api/<CourseController>/5
+        [Authorize]
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutAsync(int id, [FromBody] Course data)
+        public async Task<ActionResult> PutAsync(int id, [FromBody] CourseDTO data)
         {
-            var course = await _repository.UpdateAsync(id, data);
+            var course = await _courseService.UpdateAsync(id, data);
 
             return course == null ? NotFound() : NoContent();
         }
 
         // DELETE api/<CourseController>/5
+        [Authorize]
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            var result = await _repository.DeleteAsync(id);
+            var result = await _courseService.DeleteAsync(id);
 
             return result ? NoContent() : NotFound();
         }

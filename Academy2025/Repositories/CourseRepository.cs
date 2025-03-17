@@ -1,5 +1,6 @@
 ﻿using Academy2025.Data;
 using Microsoft.EntityFrameworkCore;
+
 namespace Academy2025.Repositories
 {
     public class CourseRepository : ICourseRepository
@@ -25,24 +26,8 @@ namespace Academy2025.Repositories
             await _context.Courses.AddAsync(data);
             await _context.SaveChangesAsync();
         }
-        public async Task<Course?> UpdateAsync(int id, Course data)
-        {
-            var course = await _context.Courses.FirstOrDefaultAsync(course => course.Id == id);
-
-            if (course != null && course.Id == id)
-            {
-                course.Title = data.Title;
-                course.Description = data.Description;
-                course.Url = data.Url;
-                course.Author = data.Author;
-                course.Users = data.Users;
-
-                await _context.SaveChangesAsync();
-
-                return course;
-            }
-            return null;
-        }
+        public Task<int> UpdateAsync()
+            => _context.SaveChangesAsync();
         public async Task<bool> DeleteAsync(int id)
         {
             var course = await _context.Courses.FirstOrDefaultAsync(course => course.Id == id);
