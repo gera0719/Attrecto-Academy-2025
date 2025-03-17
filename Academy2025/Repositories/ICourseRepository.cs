@@ -8,6 +8,7 @@ namespace Academy2025.Repositories
         Task<bool> DeleteAsync(int id);
         Task<List<Course>> GetAllAsync();
         Task<Course?> GetByIdAsync(int id);
+        Task<List<Course?>> GetByAuthorAsync(string author);
         Task<int> UpdateAsync();
     }
 }

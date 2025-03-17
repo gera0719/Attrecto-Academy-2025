@@ -29,6 +29,12 @@ namespace Academy2025.Services
             
             return course != null ? MapToDto(course) : null;
         }
+        public async Task<List<CourseDTO>> GetByAuthorAsync(string author)
+        {
+            var courses = await _courseRepository.GetByAuthorAsync(author);
+
+            return courses.Select(MapToDto).ToList();
+        }
 
         public async Task<CourseDTO?> UpdateAsync(int id, CourseDTO data)
         {

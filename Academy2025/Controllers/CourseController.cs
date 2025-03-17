@@ -35,6 +35,24 @@ namespace Academy2025.Controllers
 
             return course == null ? NotFound() : course;
         }
+        [Authorize]
+        [HttpGet("byauthor")]
+        public async Task<ActionResult<IEnumerable<CourseDTO>>> GetByAuthor(string author)
+        {
+            if (string.IsNullOrWhiteSpace(author))
+            {
+                return BadRequest("Author name cannot be empty.");
+            }
+
+            var courses = await _courseService.GetByAuthorAsync(author);
+
+            if (courses == null || !courses.Any())
+            {
+                return NotFound("No courses found for the specified author.");
+            }
+
+            return Ok(courses);
+        }
 
         // POST api/<CourseController>
         [AllowAnonymous]

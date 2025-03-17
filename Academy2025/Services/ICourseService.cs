@@ -9,5 +9,6 @@ namespace Academy2025.Services
         Task<List<CourseDTO>> GetAllAsync();
         Task<CourseDTO?> GetByIdAsync(int id);
         Task<CourseDTO?> UpdateAsync(int id, CourseDTO data);
+        Task<List<CourseDTO>> GetByAuthorAsync(string author);
     }
 }

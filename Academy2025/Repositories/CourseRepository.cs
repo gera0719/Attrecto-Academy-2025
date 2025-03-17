@@ -21,6 +21,10 @@ namespace Academy2025.Repositories
             
             return _context.Courses.FirstOrDefaultAsync(course => course.Id == id);
         }
+        public Task<List<Course?>> GetByAuthorAsync(string author)
+        {
+            return _context.Courses.Where(course => course.Author == author).ToListAsync();
+        }
         public async Task CreateAsync(Course data)
         {
             await _context.Courses.AddAsync(data);
